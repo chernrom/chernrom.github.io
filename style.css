@@ -1,0 +1,270 @@
+/*
+  Загружаем шрифт Roboto
+*/
+
+
+
+
+/*
+  Простейший reset - удостоверимся, что у всех элементов нулевые
+  отступы и границы элементов считаются вместе со всеми отступами (box-sizing)
+
+  https://learn.javascript.ru/box-sizing
+
+  Здесь же пропишем свойство, которое преобразует регистр текста в верхний
+  для всех элементов
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+/*
+  В CSS можно делать переменные., нпапример задать для text-color значение #f0f0f0, а потом ниже 
+  использовать, например color: var(--text-color);
+
+  Разместим наши несколько css-переменных в псевдо-классе :root
+  css-переменные можно размещать по факту в любом элементе, в зависимости от того,
+  какая специфичность нам нужна. Так как в этом проекте мы обходимся только переменными цвета, которые 
+  распространяются на весь документ - размещаем их в самом корне, :root всегда является самым
+  верхним элементом дерева
+
+  https://css-tricks.com/almanac/selectors/r/root/
+*/
+
+:root {
+  --text-color: #f0f0f0;
+  --gray-color: rgba(240, 240, 240, 0.6);
+  --background-color: #0a020c;
+}
+
+html {
+  cursor: url("./cat_default.png") 40 45, auto;
+}
+
+body {
+  padding: 10vw 3.333vw;
+  padding-bottom: 13.333vw;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.1vw;
+  background-color: var(--background-color);
+  color: white;
+
+  /* 
+  Меняем стандартный курсор на милого котика, а так как котик у нас круглый,
+  а стрелка мыши срабатывает самым верхним углом (там её хотспот), а с котиком это 
+  неудобно - перенесём хотспот на его нос - просто сместим top-left хотспота в пикселях
+  в центр мордочки
+  
+  https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+  */
+}
+
+/*
+Вёрстка в проекте mobile-first - сперва мы указываем все размеры и свойства для 
+мобильного отображения (viewport), потом с помощью медиа-query ниже меняем их на 
+больших экранах
+
+https://developer.mozilla.org/ru/docs/Web/CSS/@media
+*/
+.name {
+  font-size: 12.778vw;
+  line-height: 100%;
+}
+
+.block {
+  margin-top: 13.333vw;
+}
+
+.block-title {
+  color: rgba(240, 240, 240, 0.6);
+  line-height: 5.208vw;
+  font-size: 4.444vw;
+  margin-bottom: 3.333vw;
+}
+
+.entry {
+  line-height: 7.814vw;
+  font-size: 6.667vw;
+  margin-bottom: 1.667vw;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400; /* обычное начертание (можно 700 для жирного) */
+}
+
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+  /*
+  Поменяем курсор на котика из Шрека при наведении на ссылку
+  Важно сделать это здесь, а не в псевдо-классе :hover
+  Иначе при наведении на ссылку могут быть крохотные моменты,
+  когда курсор сбрасывается к дефолтной "руке"
+  */
+  cursor: url("./cat_link.png") 40 45, auto;
+}
+
+a:hover {
+  color: var(--gray-color);
+}
+
+/* 
+Медиа query для планшетов, срабатывает, когда минимальный размер окна достигает 1024px
+*/
+
+@media screen and (min-width: 1024px) {
+  body {
+    padding: 4.883vw;
+    padding-bottom: 9.375vw;
+  }
+
+  .name {
+    font-size: 9.375vw;
+  }
+
+  .block {
+    margin-top: 9.375vw;
+  }
+
+  .block-title {
+    line-height: 3.434vw;
+    font-size: 2.93vw;
+    margin-bottom: 2.344vw;
+  }
+
+  .entry {
+    line-height: 8.24vw;
+    font-size: 7.031vw;
+    margin-bottom: 0;
+  }
+}
+
+/* Медиа query для десктопов, срабатывает при достижении 1440px  */
+
+@media screen and (min-width: 1440px) {
+  body {
+    padding: 3.472vw;
+    padding-bottom: 8.333vw;
+  }
+
+  .name {
+    font-size: 10vw;
+    margin-bottom: 1.667vw;
+  }
+
+  .block {
+    margin-top: 8.333vw;
+  }
+
+  .block-title {
+    line-height: 3.906vw;
+    font-size: 3.333vw;
+    margin-bottom: 2.5vw;
+  }
+
+  .entry {
+    line-height: 7.813vw;
+    font-size: 6.667vw;
+  }
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-bottom: 5vw;
+}
+
+.profile-photo {
+  width: 15vw;
+  height: 15vw;
+  border-radius: 50%; /* Делаем круг */
+  object-fit: cover;
+  border: 2px solid var(--gray-color);
+  min-width: 80px; /* Минимальный размер */
+  min-height: 80px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(240, 240, 240, 0.3);
+}
+
+/* Адаптивные стили для фото и заголовка */
+@media screen and (max-width: 767px) {
+  .header-container {
+    gap: 4vw;
+  }
+  .profile-photo {
+    width: 40vw;
+    height: 40vw;
+  }
+  .name {
+    font-size: 10vw;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .profile-photo {
+    width: 10vw;
+    height: 10vw;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .profile-photo {
+    width: 15vw;
+    height: 15vw;
+  }
+}
+
+/* Обновляем стили для заголовка */
+.name {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.block-entries a {
+  position: relative;
+  text-decoration: none;
+  color: inherit; /* или другой цвет */
+  transition: all 0.3s ease;
+}
+
+/* Эффект подчёркивания при наведении */
+.block-entries a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px; /* Толщина подчёркивания */
+  bottom: -2px; /* Отступ от текста */
+  left: 0;
+  background-color: currentColor; /* Цвет как у текста */
+  transition: width 0.6s ease;
+}
+
+.block-entries a:hover::after {
+  width: 100%;
+}
+
+/* Опционально: изменение цвета при наведении */
+.block-entries a:hover {
+  color: #ffffff; /* Оставил белый себе, но можно поменять*/
+}
+
+.entry {
+  display: flex;
+  align-items: center; /* Выравнивает элементы по вертикали */
+  gap: 5px; /* Расстояние между текстом и иконкой */
+}
+
+.heart-icon {
+  width: 1em;   /* Размер иконки равен размеру шрифта (можно изменить) */
+  height: 1em;  /* Сохраняет пропорции */
+  vertical-align: middle; /* Выравнивание по середине текста */
+  margin-left: 0.2em; /* Отступ слева, если нужно */
+}
